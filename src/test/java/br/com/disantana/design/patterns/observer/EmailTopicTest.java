@@ -5,23 +5,20 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EmailTopicTest extends Assert {
 
-
     @Rule
     public ExpectedException exceptionRule = ExpectedException.none();
-    @Mock
+
     private EmailTopic emailTopic;
-    private List<Observer> observers;
 
     @Before
     public void setUp() throws Exception {
-        emailTopic = new EmailTopic(this.observers);
+        emailTopic = new EmailTopic(null);
     }
 
     @Test
@@ -33,12 +30,11 @@ public class EmailTopicTest extends Assert {
     }
 
     @Test
-    public void shouldRegister() {
+    public void shouldRegisterNewObserverWithSuccess() {
         Observer observer = new EmailTopicSubscriber("observer");
-        EmailTopic mock = Mockito.mock(EmailTopic.class);
-        mock.register(observer);
-        Mockito.verify(mock, Mockito.times(1)).register(observer);
-
+        List<Observer> observers = new ArrayList<>();
+        emailTopic = new EmailTopic(observers);
+        assertTrue(emailTopic.register(observer));
     }
 
 
