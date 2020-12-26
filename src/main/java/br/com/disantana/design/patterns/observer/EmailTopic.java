@@ -14,8 +14,11 @@ public class EmailTopic implements Subject {
     @Override
     public boolean register(Observer observer) {
         if (observers == null) throw new NullPointerException("Null object/observer");
-        if (!observers.contains(observer))
-            observers.add(observer);
+
+        if (observers.contains(observer)) throw new RuntimeException("Oberver already exists");
+
+        observers.add(observer);
+
         return true;
     }
 
