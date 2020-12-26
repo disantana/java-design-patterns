@@ -12,10 +12,11 @@ public class EmailTopic implements Subject {
     }
 
     @Override
-    public void register(Observer observer) {
+    public boolean register(Observer observer) {
         if (observers == null) throw new NullPointerException("Null object/observer");
         if (!observers.contains(observer))
             observers.add(observer);
+        return true;
     }
 
     @Override
