@@ -25,18 +25,27 @@ public class EmailTopicTest extends Assert {
     public void shouldReturnNPEWhenObserversNotInstantiated() {
         exceptionRule.expect(NullPointerException.class);
         exceptionRule.expectMessage("Null object/observer");
-        Observer observer = new EmailTopicSubscriber("Observer");
+        Observer observer = createObserver("Observer");
         emailTopic.register(observer);
     }
 
     @Test
     public void shouldRegisterNewObserverWithSuccess() {
-        Observer observer = new EmailTopicSubscriber("observer");
-        List<Observer> observers = new ArrayList<>();
+        Observer observer = createObserver("observer");
+        List<Observer> observers = getObservers();
         emailTopic = new EmailTopic(observers);
         assertTrue(emailTopic.register(observer));
     }
 
+    @Test
+    public void shouldThrowRuntimeExceptionWhenDuplicatedObserversIsAdded() {
+        exceptionRule.expect(RuntimeException.class);
+        Observer observer = createObserver("observer");
+        Observer anotherObserver = observer;
+
+        emailTopic.register(observer);
+        emailTopic.register(anotherObserver);
+    }
 
     @Test
     public void unregister() {
@@ -52,5 +61,14 @@ public class EmailTopicTest extends Assert {
 
     @Test
     public void postMessage() {
+    }
+
+    private Observer createObserver(String observer) {
+        return new EmailTopicSubscriber(observer);
+    }
+
+    private List<Observer> getObservers() {
+        List<Observer> observers = new ArrayList<>();
+        return observers;
     }
 }
