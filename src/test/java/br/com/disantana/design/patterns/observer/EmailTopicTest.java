@@ -15,6 +15,7 @@ public class EmailTopicTest extends Assert {
     public ExpectedException exceptionRule = ExpectedException.none();
 
     private EmailTopic emailTopic;
+    private Observer observer;
 
     @Before
     public void setUp() throws Exception {
@@ -31,7 +32,7 @@ public class EmailTopicTest extends Assert {
 
     @Test
     public void shouldRegisterNewObserverWithSuccess() {
-        Observer observer = createObserver("observer");
+        observer = createObserver("observer");
         List<Observer> observers = getObservers();
         emailTopic = new EmailTopic(observers);
         assertTrue(emailTopic.register(observer));
@@ -48,7 +49,27 @@ public class EmailTopicTest extends Assert {
     }
 
     @Test
-    public void unregister() {
+    public void shouldThrowExceptionToNullObserver() {
+        exceptionRule.expect(NullPointerException.class);
+        exceptionRule.expectMessage("Null observer passed");
+        emailTopic.unregister(null);
+    }
+
+    @Test
+    public void shouldThrowExceptionToUnregisteredObserver() {
+        exceptionRule.expect(NullPointerException.class);
+        exceptionRule.expectMessage("Observer not registered");
+        emailTopic.unregister(createObserver("unregistered"));
+    }
+
+    @Test
+    public void shouldUnregisterWithSuccess() {
+        List<Observer> observers = getObservers();
+        EmailTopic topic = new EmailTopic(observers);
+        Observer observerToUnregister = createObserver("Observer to unregister");
+        topic.register(observerToUnregister);
+        boolean unregistered = topic.unregister(observerToUnregister);
+        assertTrue(unregistered);
     }
 
     @Test
