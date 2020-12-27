@@ -23,8 +23,11 @@ public class EmailTopic implements Subject {
     }
 
     @Override
-    public void unregister(Observer observer) {
+    public boolean unregister(Observer observer) {
+        if (observer == null) throw new NullPointerException("Null observer passed");
+        if (observers == null || !observers.contains(observer)) throw new NullPointerException("Observer not registered");
         observers.remove(observer);
+        return true;
     }
 
     @Override

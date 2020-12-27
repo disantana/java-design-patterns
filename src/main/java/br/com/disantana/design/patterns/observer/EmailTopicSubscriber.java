@@ -2,20 +2,20 @@ package br.com.disantana.design.patterns.observer;
 
 public class EmailTopicSubscriber implements Observer {
 
-    private String message;
+    private String name;
     private Subject topic;
 
     EmailTopicSubscriber(String message) {
-        this.message = message;
+        this.name = message;
     }
 
     @Override
     public void update() {
         String message = (String) topic.getUpdate(this);
         if (message == null)
-            System.out.println(this.message + " no new message on this topic!");
+            System.out.println(this.name + " no new message on this topic!");
         else
-            System.out.println(this.message +" Retrieving message: " + message);
+            System.out.println(this.name +" Retrieving message: " + message);
     }
 
     @Override
