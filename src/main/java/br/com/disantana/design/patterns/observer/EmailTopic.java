@@ -32,6 +32,7 @@ public class EmailTopic implements Subject {
 
     @Override
     public void notifyObserver() {
+        if (this.observers == null) throw new NullPointerException("Observers not initialized");
         observers.forEach(observer -> observer.update());
     }
 
