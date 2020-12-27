@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,13 +68,32 @@ public class EmailTopicTest extends Assert {
         List<Observer> observers = getObservers();
         EmailTopic topic = new EmailTopic(observers);
         Observer observerToUnregister = createObserver("Observer to unregister");
+
         topic.register(observerToUnregister);
         boolean unregistered = topic.unregister(observerToUnregister);
+
         assertTrue(unregistered);
     }
 
     @Test
-    public void notifyObserver() {
+    public void shouldNotifyObserverWithSuccess() {
+        List<Observer> observerList = getObservers();
+        EmailTopic topic = new EmailTopic(observerList);
+        Observer observerMocked = Mockito.mock(Observer.class);
+
+        topic.register(observerMocked);
+        topic.notifyObserver();
+
+        Mockito.verify(observerMocked, Mockito.times(1)).update();
+
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenObserversNotInstatiated() {
+        exceptionRule.expect(NullPointerException.class);
+        exceptionRule.expectMessage("Observers not initialized");
+        EmailTopic topic = new EmailTopic(null);
+        topic.notifyObserver();
     }
 
     @Test
@@ -84,8 +104,8 @@ public class EmailTopicTest extends Assert {
     public void postMessage() {
     }
 
-    private Observer createObserver(String observer) {
-        return new EmailTopicSubscriber(observer);
+    private Observer createObserver(String name) {
+        return new EmailTopicSubscriber(name);
     }
 
     private List<Observer> getObservers() {
