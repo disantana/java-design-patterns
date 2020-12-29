@@ -98,10 +98,28 @@ public class EmailTopicTest extends Assert {
 
     @Test
     public void getUpdate() {
+        EmailTopic topic = new EmailTopic(getObservers());
+        EmailTopicSubscriber subscriber = new EmailTopicSubscriber("Subscriber is observer");
+        var message = "Message posted.";
+
+        subscriber.setSubject(topic);
+        topic.register(subscriber);
+        topic.postMessage(message);
+
+        assertEquals(topic.getUpdate(subscriber), message);
     }
 
     @Test
     public void postMessage() {
+        EmailTopic topic = new EmailTopic(getObservers());
+        EmailTopicSubscriber subscriber = new EmailTopicSubscriber("Subscriber is observer");
+        topic.postMessage("posted");
+
+        topic.register(subscriber);
+        subscriber.setSubject(topic);
+
+        assertEquals("posted", topic.getUpdate(subscriber));
+
     }
 
     private Observer createObserver(String name) {
