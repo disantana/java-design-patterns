@@ -10,12 +10,14 @@ public class EmailTopicSubscriber implements Observer {
     }
 
     @Override
-    public void update() {
+    public String update() {
         String message = (String) topic.getUpdate(this);
         if (message == null)
             System.out.println(this.name + " no new message on this topic!");
         else
             System.out.println(this.name +" Retrieving message: " + message);
+
+        return message;
     }
 
     @Override

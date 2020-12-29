@@ -1,6 +1,6 @@
 package br.com.disantana.design.patterns.observer;
 
 interface Observer {
-    void update();
+    String update();
     void setSubject(Subject subject);
 }
