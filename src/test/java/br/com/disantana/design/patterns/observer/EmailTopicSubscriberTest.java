@@ -1,14 +1,13 @@
 package br.com.disantana.design.patterns.observer;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-public class EmailTopicSubscriberTest extends Assert {
+public class EmailTopicSubscriberTest {
 
     @Test
     public void update() {
@@ -24,7 +23,6 @@ public class EmailTopicSubscriberTest extends Assert {
     }
 
     private List<Observer> getObservers() {
-        List<Observer> observers = new ArrayList<>();
-        return observers;
+        return new ArrayList<>();
     }
 }

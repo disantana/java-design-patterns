@@ -1,22 +1,21 @@
 package br.com.disantana.design.patterns.cor;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-public class ManagerPurchasePowerTest extends Assert {
+public class ManagerPurchasePowerTest {
 
     PurchasePower manager = new ManagerPurchasePower();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         manager.setSucessor(new DirectorPurchasePower());
     }
 
     @Test
-    public void deveSerAutorizadoPorManager(){
+    public void deveSerAutorizadoPorManager() {
         PurchaseRequest request = new PurchaseRequest(90, "Teste Manager");
         String approvedByManager = manager.processRequest(request);
 
@@ -24,7 +23,7 @@ public class ManagerPurchasePowerTest extends Assert {
     }
 
     @Test
-    public void deveSerAutorizadoPorDirector(){
+    public void deveSerAutorizadoPorDirector() {
         PurchaseRequest request = new PurchaseRequest(1100, "Teste Director");
         String approvedByManager = manager.processRequest(request);
 

@@ -1,15 +1,16 @@
 package br.com.disantana.design.patterns.strategy;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class BaloonTest extends Assert {
+import static org.junit.Assert.assertEquals;
+
+public class BaloonTest  {
 
     private ScoreBoard baloonScoreBoard;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         baloonScoreBoard = new ScoreBoard();
         baloonScoreBoard.scoreAlgorithmBase = new Baloon();
     }
@@ -24,6 +25,6 @@ public class BaloonTest extends Assert {
     public void testCalculateScoreForBaloon() {
         var baloon = new Baloon();
         int baloonScore = baloon.calculateScore(10, 5);
-        assertEquals(baloonScore, 30);
+       assertEquals(baloonScore, 30);
     }
 }

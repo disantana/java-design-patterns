@@ -1,5 +1,7 @@
 package br.com.disantana.design.patterns.observer;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -10,7 +12,7 @@ import org.mockito.Mockito;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmailTopicTest extends Assert {
+public class EmailTopicTest {
 
     @Rule
     public ExpectedException exceptionRule = ExpectedException.none();
@@ -19,7 +21,7 @@ public class EmailTopicTest extends Assert {
     private Observer observer;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         emailTopic = new EmailTopic(null);
     }
 
@@ -36,17 +38,16 @@ public class EmailTopicTest extends Assert {
         observer = createObserver("observer");
         List<Observer> observers = getObservers();
         emailTopic = new EmailTopic(observers);
-        assertTrue(emailTopic.register(observer));
+        Assert.assertTrue(emailTopic.register(observer));
     }
 
     @Test
     public void shouldThrowRuntimeExceptionWhenDuplicatedObserversIsAdded() {
         exceptionRule.expect(RuntimeException.class);
         Observer observer = createObserver("observer");
-        Observer anotherObserver = observer;
 
         emailTopic.register(observer);
-        emailTopic.register(anotherObserver);
+        emailTopic.register(observer);
     }
 
     @Test
@@ -72,7 +73,7 @@ public class EmailTopicTest extends Assert {
         topic.register(observerToUnregister);
         boolean unregistered = topic.unregister(observerToUnregister);
 
-        assertTrue(unregistered);
+        Assert.assertTrue(unregistered);
     }
 
     @Test
@@ -106,7 +107,7 @@ public class EmailTopicTest extends Assert {
         topic.register(subscriber);
         topic.postMessage(message);
 
-        assertEquals(topic.getUpdate(subscriber), message);
+        Assert.assertEquals(topic.getUpdate(subscriber), message);
     }
 
     @Test
@@ -118,7 +119,7 @@ public class EmailTopicTest extends Assert {
         topic.register(subscriber);
         subscriber.setSubject(topic);
 
-        assertEquals("posted", topic.getUpdate(subscriber));
+        Assert.assertEquals("posted", topic.getUpdate(subscriber));
 
     }
 
@@ -127,7 +128,6 @@ public class EmailTopicTest extends Assert {
     }
 
     private List<Observer> getObservers() {
-        List<Observer> observers = new ArrayList<>();
-        return observers;
+       return new ArrayList<>();
     }
 }

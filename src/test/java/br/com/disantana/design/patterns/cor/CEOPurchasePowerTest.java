@@ -1,15 +1,16 @@
 package br.com.disantana.design.patterns.cor;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CEOPurchasePowerTest extends Assert {
+import static org.junit.Assert.assertEquals;
+
+public class CEOPurchasePowerTest  {
 
     PurchasePower ceo = new CEOPurchasePower();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         ceo.setSucessor(null);
     }
 

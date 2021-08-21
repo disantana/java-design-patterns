@@ -1,15 +1,16 @@
 package br.com.disantana.design.patterns.strategy;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class SquareBaloonTest extends Assert {
+import static org.junit.Assert.assertEquals;
+
+public class SquareBaloonTest {
 
     private ScoreBoard squareBaloonScoreBoard;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         squareBaloonScoreBoard = new ScoreBoard();
         squareBaloonScoreBoard.scoreAlgorithmBase = new SquareBaloon();
     }

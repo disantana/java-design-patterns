@@ -1,19 +1,17 @@
 package br.com.disantana.design.patterns.cor;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-public class DirectorPurchasePowerTest extends Assert
-{
+public class DirectorPurchasePowerTest {
     PurchasePower director;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         director = new DirectorPurchasePower();
-       director.setSucessor(new CEOPurchasePower());
+        director.setSucessor(new CEOPurchasePower());
     }
 
     @Test

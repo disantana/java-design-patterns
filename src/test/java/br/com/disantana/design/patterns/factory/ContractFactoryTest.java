@@ -1,12 +1,10 @@
 package br.com.disantana.design.patterns.factory;
 
-import org.junit.Assert;
 import org.junit.Test;
-import org.mockito.Mock;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-public class ContractFactoryTest extends Assert {
+public class ContractFactoryTest {
 
     private ContractFactory factory = new ContractFactory();
 

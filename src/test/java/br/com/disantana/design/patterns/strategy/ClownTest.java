@@ -1,15 +1,16 @@
 package br.com.disantana.design.patterns.strategy;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ClownTest extends Assert {
+import static org.junit.Assert.assertEquals;
+
+public class ClownTest {
 
     private ScoreBoard clownScoreBoard;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         clownScoreBoard = new ScoreBoard();
         clownScoreBoard.scoreAlgorithmBase = new Clown();
     }
