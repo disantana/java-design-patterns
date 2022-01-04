@@ -1,19 +1,11 @@
 package br.com.disantana.design.patterns.cor;
 
 public class PurchaseRequest {
-    private double amount;
-    private String purpose;
+    private final double amount;
+    private final String purpose;
 
     public PurchaseRequest(double amount, String purpose) {
         this.amount = amount;
-        this.purpose = purpose;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public void setPurpose(String purpose) {
         this.purpose = purpose;
     }
 

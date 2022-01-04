@@ -2,11 +2,19 @@ package br.com.disantana.design.patterns.cor;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import static org.mockito.Mockito.*;
+import org.mockito.MockitoAnnotations;
 
 import static org.junit.Assert.assertEquals;
 
 public class DirectorPurchasePowerTest {
-    PurchasePower director;
+    @InjectMocks
+    private PurchasePower director;
+
+    @Mock
+    private PurchasePower sucessor;
 
     @Before
     public void setUp() {
@@ -15,21 +23,30 @@ public class DirectorPurchasePowerTest {
     }
 
     @Test
-    public void deveSerAutorizadoPorDiretor(){
+    public void shouldBeAuthorizedByDiretor() {
         PurchaseRequest request = new PurchaseRequest(1100, "Teste diretor");
 
-        String approvedByDirector = director.processRequest(request);
+        String approved = director.processRequest(request);
 
-        assertEquals("Director will approve $ 1100.0",  approvedByDirector);
+        assertEquals("approved", approved);
     }
 
     @Test
-    public void deveSerAprovadoPorCEO(){
-        PurchaseRequest request = new PurchaseRequest(2100, "Teste CEO");
+    public void shouldBeInvalid() {
+        PurchaseRequest request = new PurchaseRequest(0, "Invalid");
+        String invalid = director.processRequest(request);
 
-        String approvedByCEO = director.processRequest(request);
+        assertEquals("invalid", invalid);
+    }
 
-        assertEquals("CEO Will analyze.", approvedByCEO);
+    @Test
+    public void shouldCallSucessor() {
+        MockitoAnnotations.openMocks(this);
+        var unacceptableValue = director.getAllowable() + 1;
+        PurchaseRequest request = new PurchaseRequest(unacceptableValue, "Test");
+        director.processRequest(request);
+
+        verify(sucessor, times(1)).processRequest(request);
     }
 
 }

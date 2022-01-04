@@ -7,16 +7,12 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.junit.Assert.assertNull;
 
 public class CEOPurchasePowerTest {
 
     @InjectMocks
     private PurchasePower ceo;
-
-    @Mock
-    private PurchasePower sucessor;
 
     @Before
     public void setUp() {
@@ -41,12 +37,11 @@ public class CEOPurchasePowerTest {
     }
 
     @Test
-    public void shouldCallSucessor() {
+    public void shouldReturnNull() {
         MockitoAnnotations.openMocks(this);
         PurchaseRequest request = new PurchaseRequest(500000, "Invalid");
-        ceo.processRequest(request);
 
-        verify(sucessor, times(1)).processRequest(request);
+        assertNull(ceo.processRequest(request));
     }
 
 }
