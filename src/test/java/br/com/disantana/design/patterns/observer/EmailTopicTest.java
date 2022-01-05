@@ -1,7 +1,5 @@
 package br.com.disantana.design.patterns.observer;
 
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
