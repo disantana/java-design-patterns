@@ -2,31 +2,51 @@ package br.com.disantana.design.patterns.cor;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 public class ManagerPurchasePowerTest {
 
-    PurchasePower manager = new ManagerPurchasePower();
+    @InjectMocks
+    PurchasePower manager;
+
+    @Mock
+    PurchasePower sucessor;
 
     @Before
     public void setUp() {
-        manager.setSucessor(new DirectorPurchasePower());
+        manager = new ManagerPurchasePower();
     }
 
     @Test
-    public void deveSerAutorizadoPorManager() {
-        PurchaseRequest request = new PurchaseRequest(90, "Teste Manager");
-        String approvedByManager = manager.processRequest(request);
+    public void shouldBeAuthorizedByManager() {
+        PurchaseRequest request = new PurchaseRequest(50, "Teste diretor");
 
-        assertEquals("Manager will approve $ 90.0", approvedByManager);
+        String approved = manager.processRequest(request);
+
+        assertEquals("approved", approved);
     }
 
     @Test
-    public void deveSerAutorizadoPorDirector() {
-        PurchaseRequest request = new PurchaseRequest(1100, "Teste Director");
-        String approvedByManager = manager.processRequest(request);
+    public void shouldBeInvalid() {
+        PurchaseRequest request = new PurchaseRequest(0, "Invalid");
+        String invalid = manager.processRequest(request);
 
-        assertEquals("Director will approve $ 1100.0", approvedByManager);
+        assertEquals("invalid", invalid);
+    }
+
+    @Test
+    public void shouldCallSucessor() {
+        MockitoAnnotations.openMocks(this);
+        var unacceptableValue = manager.getAllowable() + 1;
+        PurchaseRequest request = new PurchaseRequest(unacceptableValue, "Test");
+        manager.processRequest(request);
+
+        verify(sucessor, times(1)).processRequest(request);
     }
 }
